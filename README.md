@@ -33,6 +33,17 @@ The first example shows how to use the same resizable array, '*int_ar*', to calc
       write (*,'(5x,a11,i4,a4,i5)') "Sum of 1 to",new_size,"is:", sum(int_ar)
       old_size = new_size
    end do
+   .
+   .
+   .
+   ! then decrease ar_size by 25 elements 4 times 
+   do it = 1, 4
+      new_size = old_size - 25
+      call reallocate(int_ar,new_size)
+      write (*,'(5x,a11,i4,a4,i5)') "Sum of 1 to",new_size,"is:", sum(int_ar)
+      old_size = new_size
+   end do
+   write (*,*)    
 ```
 which produces the following output:
 ```
