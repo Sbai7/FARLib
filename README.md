@@ -13,7 +13,7 @@ In this first release, the only Fortran module available is ResizableArray which
 ```
 gfortran ResizableArray.f90 demo1.f90 -o demo1
 ``` 
-The first example shows how to use the same resizable array to calculate a simple geometric sum of incrasing and then decreasing way as examplified in the following code snippet:
+The first example shows how to use the same resizable array, '*int_ar*', to calculate a simple geometric sum of incrasing and then decreasing way as examplified in the following code snippet:
 ```
    ! allocate and fill int_ar 
    if (.not.allocated(int_ar)) allocate(int_ar(10)) 
