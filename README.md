@@ -64,7 +64,7 @@ which produces the following output:
      Sum of 1 to   0 is:    0
 ```
 
-Next, the second examples just fills a dense matrix,A, and reposition this one into a higher rank matrix, A', such that:
+Next, the second examples just fills a dense matrix, A, and reposition this one into a higher rank matrix, A', such that:
 ```
    
                 A  |  0
@@ -73,6 +73,9 @@ Next, the second examples just fills a dense matrix,A, and reposition this one i
 ```
 This is esaly done with the following code snippet:
 ```
+   .
+   .
+   .
    new_isize = old_isize + 5
    new_jsize = old_jsize + 5
    
