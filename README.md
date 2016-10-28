@@ -1,19 +1,19 @@
 # FARLib
-This is an Array collection library which is designed according to modern Fortran 2003+ standard. It supports in-place transparent redimensioning of multidimensional arrays, up to 4th rank, of Integer, real, double, complex, and logical types. 
+This is an Array collection library which is designed according to modern Fortran 2003+ standard. It supports in-place transparent redimensioning of multidimensional arrays, up to 4th rank, of integer, real, double, complex, and logical types. 
 
 In this first release, the only Fortran module available is ResizableArray which simply increases or shrinks an allocatable array size at runtime. The only available subroutine call is '*reallocate*' which is type and rank independent. 
 
-## How to use the ResizableArray module in your code
+## How to use ResizableArray module in your code
 
 - Include '*use ResizableArray*' statement in the body of your main program, function, subroutine, or module. 
-- '*call reallocate(ar,new_size)*' it's all what's needed to resize a previously filled one-dimensional array '*ar*'. Obviously, when '*new_size*' is higher than the actual array it's going to grow. Otherwise, the array shrinks. Additional arguments are needed when manipulating higher rank arrays. 
+- '*call reallocate(ar,new_size)*' it's all what's needed to resize a previously filled one-dimensional array '*ar*'. Obviously, when '*new_size*' is higher than the actual array size it's going to grow. Otherwise, the array shrinks. Additional arguments are needed when manipulating higher rank arrays. 
 
 ## Examples 
 - Compile and link the provided demonstration example in '*demo1.f90*' using the following command (i.e. with gfortran)
 ```
 gfortran ResizableArray.f90 demo1.f90 -o demo1
 ``` 
-The first example shows how to use the same resizable array, '*int_ar*', to calculate a simple geometric sum of incrasing and then decreasing way as examplified in the following code snippet:
+The first example shows how to use the same resizable array, '*int_ar*', to calculate a simple geometric sum of increasing and then decreasing way as exemplified in the following code snippet:
 ```
    ! allocate and fill int_ar 
    if (.not.allocated(int_ar)) allocate(int_ar(10)) 
@@ -45,7 +45,7 @@ The first example shows how to use the same resizable array, '*int_ar*', to calc
    end do
    write (*,*)    
 ```
-which produces the following output:
+Which produces the following output:
 ```
      Sum of 1 to  10 is:   55
      Sum of 1 to  20 is:  210
@@ -64,14 +64,14 @@ which produces the following output:
      Sum of 1 to   0 is:    0
 ```
 
-Next, the second examples just fills a dense matrix, A, and reposition this one into a higher rank matrix, A', such that:
+Next, the second example just fills a dense matrix, A, and reposition this one into a higher rank matrix, A', such that:
 ```
    
                 A  |  0
          A' = -----------
                 0  |  I
 ```
-This is esaly done with the following code snippet:
+This is easily done with the following code snippet:
 ```
    .
    .
@@ -88,7 +88,7 @@ This is esaly done with the following code snippet:
       matrix(old_isize+i,old_jsize+i) = 1.d0
    end do 
 ```
-here is a printout of the matrix before and after this transformation:
+Here is a printout of the matrix before and after this transformation:
 ```
        3.5  1.3  7.9  0.0  4.3
        0.7  3.3  0.0  1.5  0.0
