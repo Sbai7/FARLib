@@ -1,17 +1,19 @@
 # FARLib
 This is an Array collection library which is designed according to modern Fortran 2003+ standards. It supports: 
-* in-place transparent redimensioning of multidimensional arrays,
-* ...  
-up to 4th rank, of integer, real, double, complex, and logical types. 
+* In-place transparent redimensioning of multidimensional arrays.
+* Simple memory profiling of multidimensional allocatable arrays.  
+We support integer, real, double, complex, and logical arrays up to rank 4. 
 
-In this first release, the only Fortran module available is ResizableArray which simply increases or shrinks an allocatable array size at runtime. The only available subroutine call is '*reallocate*' which is type and rank independent. 
+In this second release, available Fortran modules are:
+* ResizableArray which simply increases or shrinks an allocatable array size at runtime. The only exposed subroutine call by this module is '*reallocate*' which is type and rank independent.
+* MemoryProfiler which helps in tracing and debugging memory leaks from allocation/deallocation statements in a large Fortran based code project. 
 
 ## How to use ResizableArray module in your code
 
-- Include '*use ResizableArray*' statement in the body of your main program, function, subroutine, or module. 
-- '*call reallocate(ar,new_size)*' it's all what's needed to resize a previously filled one-dimensional array '*ar*'. Obviously, when '*new_size*' is higher than the actual array size it's going to grow. Otherwise, the array shrinks. Additional arguments are needed when manipulating higher rank arrays. 
+* Include '*use ResizableArray*' statement in the body of your main program, function, subroutine, or module. 
+* '*call reallocate(ar,new_size)*' it's all what's needed to resize a previously filled one-dimensional array '*ar*'. Obviously, when '*new_size*' is higher than the actual array size it's going to grow. Otherwise, the array shrinks. Additional arguments are needed when manipulating higher rank arrays. 
 
-## Examples 
+### Examples 
 - Compile and link the provided demonstration example in '*demo1.f90*' using the following command (i.e. with gfortran)
 ```
 gfortran ResizableArray.f90 demo1.f90 -o demo1
@@ -110,6 +112,13 @@ Here is a printout of the matrix before and after this transformation:
        0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
        0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
 ```
+
+## How to use MemoryProfiler module in your code
+
+
+### Examples 
+
+
 
 ## Plan for next releases 
 
