@@ -167,7 +167,7 @@ Compile and link the provided demonstration example in '*mp_demo1.f90*' using th
 gfortran MemoryProfiler.f90 mp_demo1.f90 -o mp_demo1
 ``` 
 
-This example shows for a simple demonstration case how to profile a module's allocatable arrays through an interanl '*mem_profiler_t*' variable 
+This example shows for a simple demonstration case how to profile a module's allocatable arrays through an internal '*mem_profiler_t*' variable 
 ```
 !> simple dense matrix solver Ax=b module. 
 Module matrix_solver
@@ -282,7 +282,7 @@ program mp_demo1
 end program mp_demo1
 ```
 
-The first section of the output file '*mp_matrix_solver.txt*' is shown below. It monitors the sequence of allocations (+ sign in first column) and deallocation (- sign in first column) and where they occur. Hence, this straightforwardly accelerates detection of memory leaks in large fortran based software projects. 
+The first section of the output file '*mp_matrix_solver.txt*' is shown below. It monitors the sequence of allocations (+ sign in first column) and deallocations (- sign in first column) and where they occur. Hence, this straightforwardly accelerates detection of memory leaks in large fortran based software projects. 
 ```
  Mode                                   Array               Subroutine                   Module
  ----                                --------               ----------                   ------
