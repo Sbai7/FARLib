@@ -2,6 +2,7 @@
 This is an Array collection library which is designed according to modern Fortran 2003+ standards. It supports: 
 * In-place transparent redimensioning of multidimensional arrays.
 * Simple memory profiling of multidimensional allocatable arrays.  
+
 We support integer, real, double, complex, and logical arrays up to rank 4. 
 
 In this second release, available Fortran modules are:
