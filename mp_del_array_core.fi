@@ -1,0 +1,22 @@
+   this%last_array = name
+   
+   this%to_alloc = .false. 
+   err = deallocate_array(var)
+   if (err /= 0) return 
+   this%n_dealloc = this%n_dealloc + 1
+   
+   if (this%is_log) then
+      
+      if (this%to_alloc) then 
+         write (this%funit, 20, advance='no') "+"  
+      else
+         write (this%funit, 20, advance='no') "-"  
+      end if
+         
+      write (this%funit, 30)  this%last_array,        &
+                              this%last_routine,      &
+                              this%last_module   
+   end if
+
+20 FORMAT(A5)
+30 FORMAT(A40,A25,A25)
