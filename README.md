@@ -1,27 +1,45 @@
 # FARLib
 This is an Array collection library which is designed according to modern Fortran 2003+ standards. It supports: 
+
 * In-place transparent redimensioning of multidimensional arrays.
+
 * Simple memory profiling of multidimensional allocatable arrays.  
 
 We support integer, real, double, complex, and logical arrays up to rank 4. 
 
 In this second release, available Fortran modules are:
+
 * ResizableArray which simply increases or shrinks an allocatable array size at runtime. The only exposed subroutine call by this module is '*reallocate*' which is type and rank independent.
+
 * MemoryProfiler which helps in tracing and debugging memory leaks from allocation/deallocation statements in a large Fortran based code project. 
 
 ## How to use ResizableArray module in your code
 
-* Include '*use ResizableArray*' statement in the body of your main program, function, subroutine, or module. 
-* '*call reallocate(ar,new_size)*' it's all what's needed to resize a previously filled one-dimensional array '*ar*'. Obviously, when '*new_size*' is higher than the actual array size it's going to grow. Otherwise, the array shrinks. Additional arguments are needed when manipulating higher rank arrays. 
+* Include the following statement in the body of your main program, function, subroutine, or module:
+```
+use ResizableArray
+``` 
+
+* For a one-dimensional array '*A*' make the following call where '*new_size*' is the target new array size. When the latter is higher than the actual array size it's going to grow. Otherwise, the array size shrinks. 
+```
+call reallocate(A,new_size)
+``` 
+
+* For a two-dimensional array '*B*' we should do: 
+```
+call reallocate(B,new_isize,new_jsize)
+``` 
+
+Hence, additional arguments are obviously expected for higher rank arrays.  
 
 ### Examples 
 
-Compile and link the provided demonstration example in '*demo1.f90*' using the following command (i.e. with gfortran)
+Compile and link the provided demonstration example in '*demo1.f90*' using the following command (i.e. with gfortran):
 ```
 gfortran ResizableArray.f90 demo1.f90 -o demo1
 ``` 
 
-The first example shows how to use the same resizable array, '*int_ar*', to calculate a simple geometric sum of increasing and then decreasing way as exemplified in the following code snippet:
+The first example shows how to use the same resizable array, '*int_ar*', to calculate a simple geometric sum of increasing and then decreasing way as shown in the following code snippet:
 ```
    ! allocate and fill int_ar 
    if (.not.allocated(int_ar)) allocate(int_ar(10)) 
@@ -53,7 +71,7 @@ The first example shows how to use the same resizable array, '*int_ar*', to calc
    end do
    write (*,*)    
 ```
-Which produces the following output:
+this produces the following output:
 ```
      Sum of 1 to  10 is:   55
      Sum of 1 to  20 is:  210
@@ -118,42 +136,42 @@ Here is a printout of the matrix before and after this transformation:
 
 ## How to use MemoryProfiler module in your code
 
-* Include the following statement at the top of the module you want to profile
+* Include the following statement at the top of the module you want to profile:
 ```
 use MemoryProfiler 
 ```
 
-* Create a new variable of type '*mem_profiler_t*' as a global variable of your module 
+* Create a new variable of type '*mem_profiler_t*' as a global variable in your module: 
 ```
 type (mem_profiler_t) :: mp  
 ```
 
-* You need to initialize it (only once) somewhere in you module. This coould be, perhaps, your module/class initializer or constructor. The supplied argument to '*mem_profiler*' function is the file where all module's allocation/deallocation calls are monitored.
+* You need to initialize it (only once) somewhere in you module. This could be, perhaps, your module/class initializer or constructor. The supplied argument to '*mem_profiler*' function is the file where all module's allocation/deallocation calls are monitored:
 ```
 mp = mem_profiler("mp_some_module.txt")  
 ```
 
-* Next, inform which module is being monitored. This has to be called only once. 
+* Next, inform which module is being monitored. This has to be called only once: 
 ```
 err = mp%add_module('module_name')  
 ``` 
 
-* At the top of each module subroutine/function we want to monitor place a statement like this
+* At the top of each module subroutine/function we want to monitor, place a statement like this:
 ```
 err = mp%add_routine("routine_name")  
 ``` 
 
-* Instead of calling the '*allocate*' statement to reserve memory for an array A let's say of rank 2, replace it with the following statement, where '*d*' holds the desired array size along each dimension. This call has the effect of allocating the array plus monitoring its memory status.  
+* Instead of calling the '*allocate*' statement to reserve memory for an array A let's say of rank 2, replace it with the following statement, where '*d*' holds the desired array size along each dimension. This call has the double effect of allocating the array plus monitoring its memory status:  
 ```
 err = mp%add_array(var=A, d=[n,n], name="A") 
 ``` 
 
-* Likewase, instead of caling the '*deallocate*' statement to free memory reserved by array A, replace it with the following statement 
+* Likewise, instead of calling the '*deallocate*' statement to free memory reserved by array A, replace it with the following statement: 
 ```
 err = mp%del_array(A,"A") 
 ``` 
 
-* Once you finish with it you can reset the memory profiling variable 
+* Once you finish with it you can reset the memory profiling variable: 
 ```
 call mp%reset() 
 ``` 
@@ -162,12 +180,12 @@ For realistic fortran based codes, a single memory profiler variable could be pl
 
 ### Examples 
 
-Compile and link the provided demonstration example in '*mp_demo1.f90*' using the following command (i.e. with gfortran)
+Compile and link the provided demonstration example in '*mp_demo1.f90*' using the following command (i.e. with gfortran):
 ```
 gfortran MemoryProfiler.f90 mp_demo1.f90 -o mp_demo1
 ``` 
 
-This example shows for a simple demonstration case how to profile a module's allocatable arrays through an internal '*mem_profiler_t*' variable 
+This example shows for a simple demonstration case how to profile a module's allocatable arrays through an internal '*mem_profiler_t*' variable: 
 ```
 !> simple dense matrix solver Ax=b module. 
 Module matrix_solver
@@ -257,7 +275,7 @@ end subroutine delete_mod
 end module matrix_solver
 ```
 
-Next, a toy example program using the last module with built-in memory tracing capability is constructed   
+Next, a toy example program using the last module with built-in memory tracing capability is constructed:   
 ```
 !> simple toy example of the memory profiler module 
 program mp_demo1
@@ -301,8 +319,8 @@ The first section of the output file '*mp_matrix_solver.txt*' is shown below. It
 
 ## Plan for next releases 
 
-* Extend '*mem_profiler_t*' type to detect other gotchas (i.e. used memory, etc).
-* Design extended types of '*mem_profiler_t*' to do more sophisticated memory tracing (i.e. kepp history feedback).
+* Extend '*mem_profiler_t*' type to detect other gotchas (such as used memory, etc).
+* Design extended types of '*mem_profiler_t*' to perform more sophisticated memory tracing capabilities.
 * New module for dynamic array manipulation (aka Fortran 2003+ equivalent to std::vector in C++ STL).
 * Special modules for dynamic vectors, dense and sparse matrices.
 * Design patterns for Resizable arrays of derived types.
