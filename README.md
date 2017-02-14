@@ -7,13 +7,13 @@ This is an Array collection library which is designed according to modern Fortra
 
 We support integer, real, double, complex, and logical arrays up to rank 4. 
 
-In this second release, available Fortran modules are:
+In this second release, available Fortran modules in the distribution include:
 
 * ResizableArray which simply increases or shrinks an allocatable array size at runtime. The only exposed subroutine call by this module is '*reallocate*' which is type and rank independent.
 
 * MemoryProfiler which helps in tracing and debugging memory leaks from allocation/deallocation statements in a large Fortran based code project. 
 
-## How to use ResizableArray module in your code
+## How to use ResizableArray module in your code?
 
 * Include the following statement in the body of your main program, function, subroutine, or module:
 ```
