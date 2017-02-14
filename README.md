@@ -146,7 +146,7 @@ use MemoryProfiler
 type (mem_profiler_t) :: mp  
 ```
 
-* You need to initialize this variable somewhere in your module, i.e., in a type constructor. This could be, perhaps, your module/class initializer or constructor. The supplied argument to '*mem_profiler*' function is the file where all module's allocation/deallocation calls are monitored:
+* You need to initialize this variable somewhere in your module, i.e., in a type constructor. The supplied argument to '*mem_profiler*' function is the file where all module's allocation/deallocation calls are monitored:
 ```
 mp = mem_profiler("mp_some_module.txt")  
 ```
