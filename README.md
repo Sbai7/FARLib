@@ -134,7 +134,7 @@ Here is a printout of the matrix before and after this transformation:
        0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
 ```
 
-## How to use MemoryProfiler module in your code
+## How to use MemoryProfiler module in your code?
 
 * Include the following statement at the top of the module you want to profile:
 ```
